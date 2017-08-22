@@ -10,6 +10,7 @@ The data sent to the StatsD server tries to be roughly equivalent to the [Indice
 
 | Elasticsearch  | Plugin         | Release date |
 | -------------- | -------------- | ------------ |
+| 5.5.2          | 5.5.2.0        | Aug 22, 2017 |
 | 5.5.1          | 5.5.1.0        | Jul 25, 2017 |
 | 5.5.0          | 5.5.0.0        | Jul 12, 2017 |
 | 5.4.2          | 5.4.2.0        | Jun 23, 2017 |
@@ -59,12 +60,12 @@ The plugin artifacts are published to Maven Central and Github. To install a pre
 From Github:
 
 ```
-./bin/elasticsearch-plugin install https://github.com/Automattic/elasticsearch-statsd-plugin/releases/download/5.5.1.0/elasticsearch-statsd-5.5.1.0.zip
+./bin/elasticsearch-plugin install https://github.com/Automattic/elasticsearch-statsd-plugin/releases/download/5.5.2.0/elasticsearch-statsd-5.5.2.0.zip
 ```
 
 From Maven Central:
 ```
-./bin/elasticsearch-plugin install http://repo1.maven.org/maven2/com/automattic/elasticsearch-statsd/5.5.1.0/elasticsearch-statsd-5.5.1.0.zip
+./bin/elasticsearch-plugin install http://repo1.maven.org/maven2/com/automattic/elasticsearch-statsd/5.5.2.0/elasticsearch-statsd-5.5.2.0.zip
 ```
 
 Change the version to match your ES version. For ES `x.y.z` the version is `x.y.z.0`
