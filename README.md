@@ -14,6 +14,7 @@ The data sent to the StatsD server tries to be roughly equivalent to the [Indice
 | 5.5.2          | 5.5.2.0        | Aug 22, 2017 |
 | 5.5.1          | 5.5.1.0        | Jul 25, 2017 |
 | 5.5.0          | 5.5.0.0        | Jul 12, 2017 |
+| 5.4.3          | 5.4.3.0        | Sep 15, 2017 |
 | 5.4.2          | 5.4.2.0        | Jun 23, 2017 |
 | 5.4.1          | 5.4.1.0        | Jun 8,  2017 |
 | 5.4.0          | 5.4.0.0        | May 6,  2017 |
@@ -29,6 +30,7 @@ The data sent to the StatsD server tries to be roughly equivalent to the [Indice
 | 5.0.2          | 5.0.2.1        | May 6,  2016 |
 | 5.0.1          | 5.0.1.1        | May 6,  2016 |
 | 5.0.0          | 5.0.0.1        | May 6,  2016 |
+| 2.4.6          | 2.4.6.0        | Jul 26, 2017 |
 | 2.4.5          | 2.4.5.0        | May 7,  2017 |
 | 2.4.4          | 2.4.4.1        | May 7,  2017 |
 | 2.4.3          | 2.4.3.1        | May 7,  2017 |
@@ -82,7 +84,7 @@ mvn package
 Once we have the artifact, install it with the following command:
 
 ```
-./bin/elasticsearch-plugin install file:///Users/anandnalya/github/automattic/elasticsearch-statsd-plugin/target/releases/elasticsearch-statsd-5.5.1.0.zip
+./bin/elasticsearch-plugin install file:///Users/anandnalya/github/automattic/elasticsearch-statsd-plugin/target/releases/elasticsearch-statsd-5.6.0.0.zip
 ```
 
 ## Installation Elasticsearch 2.x
