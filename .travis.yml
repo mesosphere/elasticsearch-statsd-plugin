@@ -1,6 +1,6 @@
 language: java
 
-script: mvn clean verify
+script: mvn clean verify -Djava.security.policy=src/test/resources/plugin-security-test.policy
 
 jdk:
   - oraclejdk8
