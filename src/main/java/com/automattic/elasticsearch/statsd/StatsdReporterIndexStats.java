@@ -26,7 +26,6 @@ public abstract class StatsdReporterIndexStats extends StatsdReporter {
     protected void sendStoreStats(String name, StoreStats storeStats) {
         if (null == storeStats) return;
         this.sendGauge(name, "size_in_bytes", storeStats.sizeInBytes());
-        this.sendGauge(name, "throttle_time_in_millis", storeStats.getThrottleTime().millis());
     }
 
     protected void sendIndexingStats(String name, IndexingStats indexingStats) {
@@ -112,6 +111,7 @@ public abstract class StatsdReporterIndexStats extends StatsdReporter {
         this.sendGauge(name, "delete_total", indexingStatsStats.getDeleteCount());
         this.sendGauge(name, "delete_time_in_millis", indexingStatsStats.getDeleteTime().millis());
         this.sendGauge(name, "delete_current", indexingStatsStats.getDeleteCurrent());
+        this.sendGauge(name, "throttle_time_in_millis", indexingStatsStats.getThrottleTime().millis());
     }
 
     protected void sendSearchStatsStats(String name, SearchStats.Stats searchStatsStats) {
@@ -143,6 +143,6 @@ public abstract class StatsdReporterIndexStats extends StatsdReporter {
         this.sendGauge(name, "hit_count", requestCacheStats.getHitCount());
         this.sendGauge(name, "miss_count", requestCacheStats.getMissCount());
         this.sendGauge(name, "evictions", requestCacheStats.getEvictions());
-        this.sendGauge(name, "memeory_size_in_bytes", requestCacheStats.getMemorySizeInBytes());
+        this.sendGauge(name, "memory_size_in_bytes", requestCacheStats.getMemorySizeInBytes());
     }
 }

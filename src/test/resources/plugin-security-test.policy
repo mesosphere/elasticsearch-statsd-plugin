@@ -1,0 +1,5 @@
+grant {
+  permission java.net.SocketPermission "localhost:1024-", "listen,resolve,connect,accept";
+  permission javax.management.MBeanServerPermission "createMBeanServer";
+  permission javax.management.MBeanPermission "-#-[-]", "queryNames";
+};
