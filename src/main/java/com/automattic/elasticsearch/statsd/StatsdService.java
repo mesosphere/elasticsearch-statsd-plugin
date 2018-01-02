@@ -22,8 +22,8 @@ import org.elasticsearch.node.NodeService;
 
 import java.security.AccessController;
 import java.security.PrivilegedAction;
-import java.util.Arrays;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Stream;
 
 public class StatsdService extends AbstractLifecycleComponent {
 
@@ -56,7 +56,8 @@ public class StatsdService extends AbstractLifecycleComponent {
         this.statsdRefreshInternal = StatsdPlugin.EVERY_S.get(settings);
         this.statsdHost = StatsdPlugin.HOST_S.get(settings);
         this.statsdPort = StatsdPlugin.PORT_S.get(settings);
-        this.statsdPrefix = Arrays.asList(StatsdPlugin.PREFIX_S.get(settings), "elasticsearch" + "." + settings.get("cluster.name")).stream().filter(s -> s.length() > 0).findFirst().get();
+        this.statsdPrefix = Stream.of(StatsdPlugin.PREFIX_S.get(settings), "elasticsearch" + "." +
+                settings.get("cluster.name")).filter(s -> s.length() > 0).findFirst().get();
         this.statsdNodeName = StatsdPlugin.NODE_NAME_S.get(settings);
         this.statsdReportNodeIndices = StatsdPlugin.REPORT_NODE_INDICES_S.get(settings);
         this.statsdReportIndices = StatsdPlugin.REPORT_INDICES_S.get(settings);
@@ -69,12 +70,9 @@ public class StatsdService extends AbstractLifecycleComponent {
             // unprivileged code such as scripts do not have SpecialPermission
             sm.checkPermission(new SpecialPermission());
         }
-        this.statsdClient = AccessController.doPrivileged(new PrivilegedAction<StatsDClient>() {
-            @Override
-            public StatsDClient run() {
-                return new NonBlockingStatsDClient(StatsdService.this.statsdPrefix, StatsdService.this.statsdHost, StatsdService.this.statsdPort);
-            }
-        });
+        this.statsdClient = AccessController.doPrivileged((PrivilegedAction<StatsDClient>) () ->
+                new NonBlockingStatsDClient(StatsdService.this.statsdPrefix, StatsdService.this.statsdHost,
+                        StatsdService.this.statsdPort));
 
         this.statsdReporterThread = EsExecutors
                 .daemonThreadFactory(this.settings, "statsd_reporter")
@@ -205,12 +203,7 @@ public class StatsdService extends AbstractLifecycleComponent {
                         }
                     }
 
-
-                    try {
-                        Thread.sleep(StatsdService.this.statsdRefreshInternal.millis());
-                    } catch (InterruptedException e1) {
-                        continue;
-                    }
+                    Thread.sleep(StatsdService.this.statsdRefreshInternal.millis());
                 }
             } catch (Exception e) {
                 StatsdService.this.logger.error("Exception thrown from the event loop of StatsdReporterThread", e);
