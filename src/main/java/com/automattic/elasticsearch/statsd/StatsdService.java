@@ -120,6 +120,7 @@ public class StatsdService extends AbstractLifecycleComponent {
                         state = StatsdService.this.clusterService.state();
                     } catch (AssertionError e) {
                         logger.info("Cluster state not set yet. Looping...");
+                        Thread.sleep(10);
                         continue;
                     }
                     boolean isClusterStarted = StatsdService.this.clusterService
