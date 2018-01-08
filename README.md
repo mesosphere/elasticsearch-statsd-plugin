@@ -10,7 +10,7 @@ The data sent to the StatsD server tries to be roughly equivalent to the [Indice
 
 | Elasticsearch  | Plugin         | Release date |
 | -------------- | -------------- | ------------ |
-| 6.1.1          | 6.1.1.0        | Jan 02, 2018 |
+| 6.1.1          | 6.1.1.0        | Jan 08, 2018 |
 | 5.6.5          | 5.6.5.0        | Dec 19, 2017 |
 | 5.6.4          | 5.6.4.0        | Nov 13, 2017 |
 | 5.6.3          | 5.6.3.0        | Oct 12, 2017 |
@@ -93,9 +93,40 @@ Once we have the artifact, install it with the following command:
 bin/elasticsearch-plugin install file:///absolute/path/to/current/dir/target/releases/elasticsearch-statsd-6.1.1.0.zip
 ```
 
-## Installation Elasticsearch 2.x-5.x
+## Installation Elasticsearch 5.x
 
-The plugin artifacts are published to Maven Central. To install a prepackaged plugin use the following command:
+The plugin artifacts are published to Maven Central and Github. To install a prepackaged plugin for ES 5.x+ use the following command:
+
+From Github:
+
+```
+./bin/elasticsearch-plugin install https://github.com/Automattic/elasticsearch-statsd-plugin/releases/download/5.6.5.0/elasticsearch-statsd-5.6.5.0.zip
+```
+
+From Maven Central:
+```
+./bin/elasticsearch-plugin install http://repo1.maven.org/maven2/com/automattic/elasticsearch-statsd/5.6.5.0/elasticsearch-statsd-5.6.5.0.zip
+```
+
+Change the version to match your ES version. For ES `x.y.z` the version is `x.y.z.0`
+
+You can also build your own by doing the following:
+
+```
+git clone http://github.com/Automattic/elasticsearch-statsd-plugin.git
+cd elasticsearch-statsd-plugin
+mvn package
+```
+
+Once we have the artifact, install it with the following command:
+
+```
+./bin/elasticsearch-plugin install file:///Users/anandnalya/github/automattic/elasticsearch-statsd-plugin/target/releases/elasticsearch-statsd-5.6.5.0.zip
+```
+
+## Installation Elasticsearch 2.x
+
+The plugin artifacts are published to Maven Central. To install a prepackaged plugin for ES 2.x use the following command:
 
 ```
 bin/plugin install com.automattic/elasticsearch-statsd/2.4.4.0

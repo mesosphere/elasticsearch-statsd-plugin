@@ -39,6 +39,10 @@
             <organization>Automattic</organization>
             <organizationUrl>https://automattic.com/</organizationUrl>
         </developer>
+        <developer>
+            <name>Loren Siebert</name>
+            <email>loren@siebert.org</email>
+        </developer>
     </developers>
 
     <properties>
