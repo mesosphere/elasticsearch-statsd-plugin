@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 @ThreadLeakScope(ThreadLeakScope.Scope.NONE)
-@ESIntegTestCase.ClusterScope(maxNumDataNodes = 3, minNumDataNodes = 3, numClientNodes = 0, numDataNodes = 3, transportClientRatio = -1, randomDynamicTemplates = false)
+@ESIntegTestCase.ClusterScope(maxNumDataNodes = 3, minNumDataNodes = 3, numClientNodes = 0, numDataNodes = 3, transportClientRatio = -1)
 public class StatsdPluginIntegrationTest extends ESIntegTestCase {
 
     public static final int STATSD_SERVER_PORT = 12345;

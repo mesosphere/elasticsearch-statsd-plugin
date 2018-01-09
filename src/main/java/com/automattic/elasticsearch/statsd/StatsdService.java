@@ -115,7 +115,14 @@ public class StatsdService extends AbstractLifecycleComponent {
         public void run() {
             try {
                 while (!StatsdService.this.closed.get()) {
-                    ClusterState state = StatsdService.this.clusterService.state();
+                    ClusterState state;
+                    try {
+                        state = StatsdService.this.clusterService.state();
+                    } catch (AssertionError e) {
+                        logger.info("Cluster state not set yet. Looping...");
+                        Thread.sleep(10);
+                        continue;
+                    }
                     boolean isClusterStarted = StatsdService.this.clusterService
                             .lifecycleState()
                             .equals(Lifecycle.State.STARTED);
@@ -145,7 +152,8 @@ public class StatsdService extends AbstractLifecycleComponent {
                                                 true,                               // circuitBreaker
                                                 false,                              // script,
                                                 false,                              // discoveryStats
-                                                false                               // ingest
+                                                false,                              // ingest
+                                                false                               // adaptiveSelection
                                         ),
                                         statsdNodeName,
                                         StatsdService.this.statsdReportFsDetails
