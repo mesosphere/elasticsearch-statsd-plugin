@@ -1,5 +1,6 @@
 grant {
-  permission java.net.SocketPermission "localhost:1024-", "listen,resolve,connect,accept";
+  permission java.net.SocketPermission "localhost:1024-", "accept,connect,listen,resolve";
+  permission java.net.SocketPermission "*:1024-", "accept,connect,resolve";
   permission javax.management.MBeanServerPermission "createMBeanServer";
   permission javax.management.MBeanPermission "-#-[-]", "queryNames";
   permission java.lang.RuntimePermission "accessClassInPackage.sun.nio.ch";
