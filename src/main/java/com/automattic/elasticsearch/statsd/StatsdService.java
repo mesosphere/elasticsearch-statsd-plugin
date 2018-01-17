@@ -203,7 +203,11 @@ public class StatsdService extends AbstractLifecycleComponent {
                         }
                     }
 
-                    Thread.sleep(StatsdService.this.statsdRefreshInternal.millis());
+                    try {
+                        Thread.sleep(StatsdService.this.statsdRefreshInternal.millis());
+                    } catch (InterruptedException e1) {
+                        continue;
+                    }
                 }
             } catch (Exception e) {
                 StatsdService.this.logger.error("Exception thrown from the event loop of StatsdReporterThread", e);
