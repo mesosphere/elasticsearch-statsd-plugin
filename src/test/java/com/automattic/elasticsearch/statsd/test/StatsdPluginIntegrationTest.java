@@ -2,7 +2,6 @@ package com.automattic.elasticsearch.statsd.test;
 
 import com.automattic.elasticsearch.plugin.StatsdPlugin;
 import com.carrotsearch.randomizedtesting.annotations.ThreadLeakScope;
-import com.google.common.collect.Iterables;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.plugins.Plugin;
@@ -31,7 +30,7 @@ public class StatsdPluginIntegrationTest extends ESIntegTestCase {
     public static final int STATSD_SERVER_PORT = 12345;
 
     private String index;
-    private String type = RandomStringGenerator.randomAlphabetic(6).toLowerCase();
+    private static final String TYPE = RandomStringGenerator.randomAlphabetic(6).toLowerCase();
 
     private static StatsdMockServer statsdMockServer;
 
@@ -82,11 +81,11 @@ public class StatsdPluginIntegrationTest extends ESIntegTestCase {
 
     @Test
     public void testThatIndexingResultsInMonitoring() throws Exception {
-        IndexResponse indexResponse = indexElement(index, type, "value");
+        IndexResponse indexResponse = indexElement(index, "value");
         assertThat(indexResponse.getId(), is(notNullValue()));
 
         //Index some more docs
-        this.indexSomeDocs(101);
+        this.indexSomeDocs();
         this.flushAndRefresh(index);
         Thread.sleep(2000);
 
@@ -97,7 +96,7 @@ public class StatsdPluginIntegrationTest extends ESIntegTestCase {
 
     @Test
     public void masterFailOverShouldWork() throws Exception {
-        IndexResponse indexResponse = indexElement(index, type, "value");
+        IndexResponse indexResponse = indexElement(index, "value");
         assertThat(indexResponse.getId(), is(notNullValue()));
         super.flushAndRefresh(index);
 
@@ -108,7 +107,7 @@ public class StatsdPluginIntegrationTest extends ESIntegTestCase {
         statsdMockServer.resetContents();
         System.out.println("stopped master");
 
-        indexResponse = indexElement(index, type, "value");
+        indexResponse = indexElement(index, "value");
         assertThat(indexResponse.getId(), is(notNullValue()));
 
         // wait for master fail over and writing to graph reporter
@@ -116,35 +115,34 @@ public class StatsdPluginIntegrationTest extends ESIntegTestCase {
         assertStatsdMetricIsContained("index."+index+".total.indexing.index_total:2|g");
     }
 
-    // the stupid hamcrest matchers have compile erros depending whether they run on java6 or java7, so I rolled my own version
+    // the stupid hamcrest matchers have compile errors depending whether they run on java6 or java7, so I rolled my own version
     // yes, I know this sucks... I want power asserts, as usual
     private void assertStatsdMetricIsContained(final String id) {
         // defensive copy as contents are modified by the mock server thread
         Collection<String> contents = new ArrayList<>(statsdMockServer.content);
-        assertThat(Iterables.any(contents, containsPattern(id)), is(true));
+        assertThat(contents.stream().anyMatch(containsPattern(id)::apply), is(true));
     }
 
     // Make sure no elements with a chars [] are included
     private void ensureValidKeyNames() {
         // defensive copy as contents are modified by the mock server thread
         Collection<String> contents = new ArrayList<>(statsdMockServer.content);
-        assertThat(Iterables.any(contents, containsPattern("\\.\\.")), is(false));
-        assertThat(Iterables.any(contents, containsPattern("\\[")), is(false));
-        assertThat(Iterables.any(contents, containsPattern("\\]")), is(false));
-        assertThat(Iterables.any(contents, containsPattern("\\(")), is(false));
-        assertThat(Iterables.any(contents, containsPattern("\\)")), is(false));
+        assertThat(contents.stream().anyMatch(containsPattern("\\.\\.")::apply), is(false));
+        assertThat(contents.stream().anyMatch(containsPattern("\\[")::apply), is(false));
+        assertThat(contents.stream().anyMatch(containsPattern("\\]")::apply), is(false));
+        assertThat(contents.stream().anyMatch(containsPattern("\\(")::apply), is(false));
+        assertThat(contents.stream().anyMatch(containsPattern("\\)")::apply), is(false));
     }
 
-    private IndexResponse indexElement(String index, String type, String fieldValue) {
+    private IndexResponse indexElement(String index, String fieldValue) {
         Map<String, Object> doc = new HashMap<>();
         doc.put("field", fieldValue);
-        return super.index(index, type, RandomStringGenerator.randomAlphabetic(16), doc);
+        return super.index(index, TYPE, RandomStringGenerator.randomAlphabetic(16), doc);
     }
 
-    private void indexSomeDocs(int docs) {
-        while (docs > 0) {
-            indexElement(index, type, "value " + docs);
-            docs--;
+    private void indexSomeDocs() {
+        for (int docs = 101; docs > 0; docs--) {
+            indexElement(index, "value " + docs);
         }
     }
 }
