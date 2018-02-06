@@ -9,8 +9,6 @@ import org.elasticsearch.monitor.process.ProcessStats;
 import org.elasticsearch.threadpool.ThreadPoolStats;
 import org.elasticsearch.transport.TransportStats;
 
-import java.util.Iterator;
-
 public class StatsdReporterNodeStats extends StatsdReporter {
 
     private final NodeStats nodeStats;
@@ -39,9 +37,7 @@ public class StatsdReporterNodeStats extends StatsdReporter {
 
     private void sendNodeThreadPoolStats(ThreadPoolStats threadPoolStats) {
         String prefix = this.getPrefix("thread_pool");
-        Iterator<ThreadPoolStats.Stats> statsIterator = threadPoolStats.iterator();
-        while (statsIterator.hasNext()) {
-            ThreadPoolStats.Stats stats = statsIterator.next();
+        for (ThreadPoolStats.Stats stats : threadPoolStats) {
             String threadPoolType = prefix + "." + stats.getName();
 
             this.sendGauge(threadPoolType, "threads", stats.getThreads());
@@ -159,9 +155,7 @@ public class StatsdReporterNodeStats extends StatsdReporter {
 
         // Maybe send details
         if (this.statsdReportFsDetails) {
-            Iterator<FsInfo.Path> infoIterator = fs.iterator();
-            while (infoIterator.hasNext()) {
-                FsInfo.Path info = infoIterator.next();
+            for (FsInfo.Path info : fs) {
                 this.sendNodeFsStatsInfo(prefix + ".data", info);
             }
         }

@@ -14,7 +14,7 @@ import java.util.Collection;
 
 public class StatsdMockServer extends Thread {
 
-    private int port;
+    private final int port;
     public Collection<String> content = new ArrayList<>();
     private DatagramSocket socket;
     private boolean isClosed = false;
@@ -55,7 +55,7 @@ public class StatsdMockServer extends Thread {
         }
     }
 
-    public void close() throws Exception {
+    public void close() {
         isClosed = true;
         socket.close();
     }
