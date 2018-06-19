@@ -18,7 +18,7 @@ The data sent to the StatsD server tries to be roughly equivalent to the [Indice
 | 6.1.3          | 6.1.3.0        | Jan 31, 2018 |
 | 6.1.2          | 6.1.2.0        | Jan 31, 2018 |
 | 6.1.1          | 6.1.1.1        | Jan 16, 2018 |
-| 5.6.9          | 5.6.9.0        | Apr 17, 2018 |
+| 5.6.9          | 5.6.9.0        | Jun 19, 2018 |
 | 5.6.5          | 5.6.5.0        | Dec 19, 2017 |
 | 5.6.4          | 5.6.4.0        | Nov 13, 2017 |
 | 5.6.3          | 5.6.3.0        | Oct 12, 2017 |
