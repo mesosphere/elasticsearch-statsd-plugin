@@ -150,7 +150,8 @@ public class StatsdService extends AbstractLifecycleComponent {
                                                 true,                               // circuitBreaker
                                                 false,                              // script,
                                                 false,                              // discoveryStats
-                                                false                               // ingest
+                                                false,                              // ingest
+                                                false                               // adaptiveSelection
                                         ),
                                         statsdNodeName,
                                         StatsdService.this.statsdReportFsDetails
