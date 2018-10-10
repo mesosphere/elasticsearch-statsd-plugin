@@ -92,7 +92,7 @@ You can also build your own by doing the following:
 ```
 git clone http://github.com/Automattic/elasticsearch-statsd-plugin.git
 cd elasticsearch-statsd-plugin
-mvn package -Djava.security.policy=src/test/resources/plugin-security-test.policy
+mvn clean package -Djava.security.policy=src/test/resources/plugin-security-test.policy -Dtests.gradle=false
 ```
 
 Once we have the artifact, install it with the following command:
