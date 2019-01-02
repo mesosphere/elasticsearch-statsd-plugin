@@ -1,13 +1,13 @@
 package com.automattic.elasticsearch.statsd;
 
 import com.timgroup.statsd.StatsDClient;
+import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.elasticsearch.common.logging.ESLoggerFactory;
 
 public abstract class StatsdReporter {
 
     private static final String DEFAULT_JOINER = ".";
-    private static final Logger logger = ESLoggerFactory.getLogger(StatsdReporter.class.getName());
+    private static final Logger logger = LogManager.getLogger(StatsdReporter.class.getName());
     private StatsDClient statsdClient;
 
     public StatsdReporter setStatsDClient(StatsDClient statsdClient) {
