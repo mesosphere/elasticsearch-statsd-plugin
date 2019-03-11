@@ -75,7 +75,7 @@ public class StatsdService extends AbstractLifecycleComponent {
                         StatsdService.this.statsdPort));
 
         this.statsdReporterThread = EsExecutors
-                .daemonThreadFactory(this.settings, "statsd_reporter")
+                .daemonThreadFactory(settings, "statsd_reporter")
                 .newThread(new StatsdReporterThread());
     }
 
