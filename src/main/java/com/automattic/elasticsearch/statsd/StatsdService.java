@@ -1,5 +1,7 @@
 package com.automattic.elasticsearch.statsd;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.automattic.elasticsearch.plugin.StatsdPlugin;
 import com.timgroup.statsd.NonBlockingStatsDClient;
 import com.timgroup.statsd.StatsDClient;
@@ -45,6 +47,8 @@ public class StatsdService extends AbstractLifecycleComponent {
 
     private final Thread statsdReporterThread;
     private final AtomicBoolean closed = new AtomicBoolean(false);
+
+    protected static final Logger logger = LogManager.getLogger(StatsdService.class);
 
     @Inject
     public StatsdService(Settings settings, Client client, ClusterService clusterService, IndicesService indicesService, NodeService nodeService) {
